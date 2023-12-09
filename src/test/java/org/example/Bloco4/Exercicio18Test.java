@@ -110,7 +110,9 @@ class Exercicio18Test {
     @Test
     void returnAverageOfMatrixWhenZero() {
         //Arrange
-        int[][] matrix = {{1, 2, 3}, {4, 0, 6}, {4, 2, 12}};
+        int[][] matrix = {{1, 2, 3},
+                            {4, 0, 6},
+                                {4, 2, 12}};
         double expected = 3.777;
         //Act
         double actual = Exercicio18.returnAverageOfMatrix(matrix);
