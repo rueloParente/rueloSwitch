@@ -130,4 +130,25 @@ class Exercicio20Test {
         //Assert
         assertArrayEquals(expected, result);
     }
+    //sortEvenToLeftOddToRight
+    @Test
+     void shouldReturnSortedEvenToLeftOddToRight() {
+        //Arrange
+        int[] array = {1, 2, 3, 4, 5, 6};
+        int[] expected = {2, 4, 6, 1, 5, 3};
+        //Act
+        int[] result = Exercicio20.sortEvenToLeftOddToRight(array);
+        //Assert
+        assertArrayEquals(expected, result);
+    }
+    @Test
+    void shouldReturnSortedEvenToLeftOddToRight2() {
+        //Arrange
+        int[] array = {1, 1, 2, 3, 4, 5, 6};
+        int[] expected = {2, 4, 6, 3, 1, 5, 1};
+        //Act
+        int[] result = Exercicio20.sortEvenToLeftOddToRight(array);
+        //Assert
+        assertArrayEquals(expected, result);
+    }
 }

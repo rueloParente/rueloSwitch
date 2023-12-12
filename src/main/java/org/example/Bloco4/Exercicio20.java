@@ -54,4 +54,17 @@ public class Exercicio20 {
         }
         return product;
     }
+    public static int [] sortEvenToLeftOddToRight (int[] array){
+        int index = 0;
+        int temp = 0;
+        for (int i=0; i < array.length; i++){
+            if (array[i] % 2 == 0){
+                temp = array[index];
+                array[index] = array[i];
+                array[i] = temp;
+                index++;
+            }
+        }
+        return array;
+    }
 }
