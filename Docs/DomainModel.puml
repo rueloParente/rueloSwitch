@@ -1,0 +1,56 @@
+@startuml
+
+class House {
+    - address: String
+    - zipCode: String
+    - gpsLocation: String
+    - rooms: List<Room>
+    - users: List<User>
+}
+
+class Room {
+    - name: String
+    - floor: Integer
+    - dimensions: String
+    - devices: List<Device>
+    - owners: List<User>
+}
+
+class Device {
+    - name: String
+    - type: String
+    - location: Room
+}
+
+class Sensor extends Device {
+    - measurements: List<Measurement>
+}
+
+class Actuator extends Device {
+    - state: State
+}
+
+class User {
+    - username: String
+    - roles: List<Role>
+}
+
+class Role {
+    - name: String
+    - permissions: List<Permission>
+}
+
+enum UserRole {
+    Administrator
+    RegularUser
+    PowerUser
+    RoomOwner
+}
+
+House "1" *-- "many" Room : contains
+Room "1" *-- "many" Device : contains
+Device <|-- Sensor : is a
+Device <|-- Actuator : is a
+House "1" *-- "many" User : has
+User "1" *-- "many" Role : has
+@enduml
