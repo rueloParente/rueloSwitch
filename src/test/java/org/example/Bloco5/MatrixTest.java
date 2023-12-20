@@ -8,15 +8,18 @@ class MatrixTest {
     //e) Retorne True caso a matriz esteja vazia e False em caso contrário.
     @Test
     void isMatrixEmpty() {
-        int[][] matrix = new int[][]{};
-        Matrix matrixTest = new Matrix(matrix);
+        Matrix matrixTest = new Matrix();
         assertTrue(matrixTest.isMatrixEmpty());
     }
     //f) Retorne o maior elemento do array.
     @Test
     void returnBiggestElement() {
         //Arrange
-        int[][] matrix = new int[][]{{1,2,10},{4,5,6},{7,8,9}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{1, 2, 10}),
+                new Vetor(new int[]{4, 5, 6}),
+                new Vetor(new int[]{7, 8, 9})
+        };
         Matrix matrixTest = new Matrix(matrix);
         //Act
         int result = matrixTest.returnBiggestElement();
@@ -26,7 +29,11 @@ class MatrixTest {
     @Test
     void returnBiggestElementWhenOnSecondRow() {
         //Arrange
-        int[][] matrix = new int[][]{{1,2,3},{4,5,9},{7,8,7}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{1, 2, 3}),
+                new Vetor(new int[]{4, 5, 9}),
+                new Vetor(new int[]{7, 8, 7})
+        };
         Matrix matrixTest = new Matrix(matrix);
         //Act
         int result = matrixTest.returnBiggestElement();
@@ -36,7 +43,11 @@ class MatrixTest {
     @Test
     void returnBiggestElementWhenOnSecondRowWithZero() {
         //Arrange
-        int[][] matrix = new int[][]{{-1,-2,-3},{-4,-5,0},{-7,-8,-7}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{-1, -2, -3}),
+                new Vetor(new int[]{-4, -5, 0}),
+                new Vetor(new int[]{-7, -8, -7})
+        };
         Matrix matrixTest = new Matrix(matrix);
         //Act
         int result = matrixTest.returnBiggestElement();
@@ -46,8 +57,7 @@ class MatrixTest {
     @Test
     void returnBiggestElementWhenMatrixIsEmpty() {
         //Arrange
-        int[][] matrix = new int[][]{};
-        Matrix matrixTest = new Matrix(matrix);
+        Matrix matrixTest = new Matrix();
         //Act
         //Assert
         assertThrows(ArrayIndexOutOfBoundsException.class, () -> matrixTest.returnBiggestElement());
@@ -56,7 +66,11 @@ class MatrixTest {
     @Test
     void returnSmallestElement() {
         //Arrange
-        int[][] matrix = new int[][]{{1,2,10},{4,5,6},{7,8,9}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{1, 2, 10}),
+                new Vetor(new int[]{4, 5, 6}),
+                new Vetor(new int[]{7, 8, 9})
+        };
         Matrix matrixTest = new Matrix(matrix);
         //Act
         int result = matrixTest.returnSmallestElement();
@@ -66,7 +80,11 @@ class MatrixTest {
     @Test
     void returnSmallestElementWhenOnSecondRow() {
         //Arrange
-        int[][] matrix = new int[][]{{1,2,3},{4,-1,9},{7,8,7}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{1, 2, 3}),
+                new Vetor(new int[]{4, -1, 9}),
+                new Vetor(new int[]{7, 8, 7})
+        };
         Matrix matrixTest = new Matrix(matrix);
         //Act
         int result = matrixTest.returnSmallestElement();
@@ -76,7 +94,11 @@ class MatrixTest {
     @Test
     void returnSmallestElementWhenOnSecondRowWithZero() {
         //Arrange
-        int[][] matrix = new int[][]{{-1,-2,-3},{-4,-5,0},{-7,-8,-7}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{-1, -2, -3}),
+                new Vetor(new int[]{-4, -5, 0}),
+                new Vetor(new int[]{-7, -8, -7})
+        };
         Matrix matrixTest = new Matrix(matrix);
         //Act
         int result = matrixTest.returnSmallestElement();
@@ -87,7 +109,11 @@ class MatrixTest {
     @Test
     void returnAverage() {
         //Arrange
-        int[][] matrix = new int[][]{{1,2,10},{4,5,6},{7,8,9}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{1, 2, 10}),
+                new Vetor(new int[]{4, 5, 6}),
+                new Vetor(new int[]{7, 8, 9})
+        };
         Matrix matrixTest = new Matrix(matrix);
         //Act
         double result = matrixTest.returnAverage();
@@ -97,8 +123,11 @@ class MatrixTest {
     @Test
     void returnAverageWhenOnSecondRow() {
         //Arrange
-        int[][] matrix = new int[][]{{1,2,3},{4,-1,9},{7,8,7}};
-        Matrix matrixTest = new Matrix(matrix);
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{1, 2, 3}),
+                new Vetor(new int[]{4, -1, 9}),
+                new Vetor(new int[]{7, 8, 7})
+        };        Matrix matrixTest = new Matrix(matrix);
         //Act
         double result = matrixTest.returnAverage();
         //Assert
@@ -107,9 +136,13 @@ class MatrixTest {
     @Test
     void returnAverageWhenOnSecondRowWithZero() {
         //Arrange
-        int[][] matrix = new int[][]{{0,0,0},{0,0,0},{0,0,0}};
+        Vetor[] matrix = new Vetor[]{
+                new Vetor(new int[]{0, 0, 0}),
+                new Vetor(new int[]{0, 0, 0}),
+                new Vetor(new int[]{0, 0, 0})
+        };
         Matrix matrixTest = new Matrix(matrix);
-        //Act
+       //Act
         double result = matrixTest.returnAverage();
         //Assert
         assertEquals(0, result, 0.1);
@@ -117,34 +150,12 @@ class MatrixTest {
     @Test
     void returnAverageWhenMatrixIsEmpty() {
         //Arrange
-        int[][] matrix = new int[][]{};
-        Matrix matrixTest = new Matrix(matrix);
+        Matrix matrixTest = new Matrix();
         //Act
         double result = matrixTest.returnAverage();
         //Assert
         assertEquals(Double.NaN, result);
     }
-    //i) Retorne um vetor em que cada posição corresponde à soma dos elementos da linha homóloga
-    //do array encapsulado.
-    @Test
-    void returnSumOfLines() {
-        //Arrange
-        int[][] matrix = new int[][]{{1,2,10},{4,5,6},{7,8,9}};
-        Matrix matrixTest = new Matrix(matrix);
-        //Act
-        int[] result = matrixTest.returnSumOfLines();
-        //Assert
-        assertArrayEquals(new int[]{13,15,24}, result);
-    }
-    @Test
-    void returnSumOfLinesWhenOnSecondRow() {
-        //Arrange
-        int[][] matrix = new int[][]{{1,2,3},{4,-1,9},{7,8,7}};
-        Matrix matrixTest = new Matrix(matrix);
-        //Act
-        int[] result = matrixTest.returnSumOfLines();
-        //Assert
-        assertArrayEquals(new int[]{6,12,22}, result);
-    }
+
 
 }

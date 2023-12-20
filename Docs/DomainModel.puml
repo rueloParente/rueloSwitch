@@ -1,56 +1,65 @@
 @startuml
+!pragma layout smetana
+' Define interface and classes
 
 class House {
-    - address: String
-    - zipCode: String
-    - gpsLocation: String
-    - rooms: List<Room>
-    - users: List<User>
+  + Address: String
+  + ZIPCode: String
+  + GPSLocation: String
 }
 
 class Room {
-    - name: String
-    - floor: Integer
-    - dimensions: String
-    - devices: List<Device>
-    - owners: List<User>
+  + Name: String
+  + Floor: Integer
+  + Dimensions: String
 }
 
-class Device {
-    - name: String
-    - type: String
-    - location: Room
+class PowerGenerator {
+  + Type: String
+  + Capacity: Double
 }
 
-class Sensor extends Device {
-    - measurements: List<Measurement>
-}
-
-class Actuator extends Device {
-    - state: State
+class EnergyStorage {
+  + Type: String
+  + Capacity: Double
 }
 
 class User {
-    - username: String
-    - roles: List<Role>
+  + Username: String
+  + Role: Role
+}
+interface Device {
+  + Name: String
+  + Type: String
+  + Location: Room
 }
 
-class Role {
-    - name: String
-    - permissions: List<Permission>
+class Sensor implements Device {
+  + MeasurementType: String
 }
 
-enum UserRole {
-    Administrator
-    RegularUser
-    PowerUser
-    RoomOwner
+class Actuator implements Device {
+  + State: String
+  + OutputValue: String
 }
 
-House "1" *-- "many" Room : contains
-Room "1" *-- "many" Device : contains
-Device <|-- Sensor : is a
-Device <|-- Actuator : is a
-House "1" *-- "many" User : has
-User "1" *-- "many" Role : has
+enum Role {
+  Administrator
+  RegularUser
+  PowerUser
+  RoomOwner
+}
+
+' Define relationships
+House "1" -- "1..*" Room
+Room "1" -- "0..*" Device
+User "0..*" -- "1..*" House : has access to >
+House "1" -- "0..*" PowerGenerator
+House "1" -- "0..*" EnergyStorage
+Room "0..*" -- "0..*" User : has owners >
+
+' Define inheritance
+Device <|-- Sensor
+Device <|-- Actuator
+
 @enduml

@@ -28,6 +28,13 @@ public class Exercicio3 {
             return returnsMinimalSumBetweenTwoArrays(arrayDataCity1, arrayDataCity2);
         }
     }
+    public static int[] retursColumnOfMatrix (int[][] array, int column){
+        int[] arrayColumn = new int[array.length];
+        for (int i = 0; i < array.length; i++){
+            arrayColumn[i] = array[i][column];
+        }
+        return arrayColumn;
+    }
     public static int returnsMinimalSumBetweenTwoArrays (int[] array1, int[] array2){
         int minimalDistance = Integer.MAX_VALUE;
         for (int i = 0; i < array1.length; i++){
@@ -38,12 +45,5 @@ public class Exercicio3 {
         }
         return minimalDistance;
     }
-    /*public static int[] returnsAllInformationPresentInDistances (int city, int[][]arrayDistance){
-        int[] array = new int[arrayDistance.length];
-        for (int i = 0; i < arrayDistance.length; i++){
-            array[i] = arrayDistance[city][i];
-        }
-        return array;
-    }*/
 
 }

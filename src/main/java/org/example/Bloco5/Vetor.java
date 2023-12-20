@@ -15,6 +15,12 @@ public class Vetor {
         vetor[i] = array[i];
         }
     }
+    public Vetor (int length){
+        vetor = new int[length];
+        for (int i=0; i<vetor.length; i++){
+            vetor[i] = 0;
+        }
+    }
     //c) Adicione um novo elemento (valor) ao vetor encapsulado.
     public void addValueToVetor (int num){
         vetor = returnArrayWithExtraSpaceAtEnd(vetor);
@@ -223,15 +229,15 @@ public int [] elementsGrowingSequenceOfAtLeastNNumbers (int n){
     public boolean trueIfVetorIsEqualToGivenVetor (int[] array){
      return compareArrays(vetor, array);
     }
-    //bb) add function to get copy of vetor so we can use int the Matrix class
-    public int[] getVetor (){
-        int[] copyVetor = new int[vetor.length];
-        for (int i=0; i<vetor.length; i++){
-            copyVetor[i] = vetor[i];
-        }
-        return copyVetor;
-    }
 
+    //bb) Get vetor copy int array
+    public int[] getVetor (){
+        int[] copy = new int[vetor.length];
+        for (int i=0; i<vetor.length; i++){
+            copy[i] = vetor[i];
+        }
+        return copy;
+    }
     //Metodos auxiliares
     private boolean trueIfAmstrong (int num){
         if(num < 0) return false;

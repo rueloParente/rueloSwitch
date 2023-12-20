@@ -1,33 +1,30 @@
 package org.example.Bloco5;
 public class Matrix {
-    private int[][] matrix;
+    private Vetor[] matrix;
     //a) Construtor público em que o array encapsulado fica vazio (i.e. sem valores).
     public Matrix(){
-        this.matrix = new int[0][0];
+        this.matrix = new Vetor[]{};
     }
     //b) Construtor público que permita inicializar o array encapsulado com alguns valores.
-    public Matrix(int[][] matrix){
-        this.matrix = new int[matrix.length][];
+    public Matrix(Vetor[] array){
+        this.matrix = new Vetor[array.length];
         for (int i=0; i< matrix.length; i++){
-            this.matrix[i] = matrix[i];
+            this.matrix[i] = array[i];
         }
     }
     //c) Adicione um novo elemento (valor) ao array encapsulado numa determinada linha, criando assim
     //uma nova coluna nessa linha.
     //Use the method addElement from the class Vetor
     public void addElement(int line, int value){
-        Vetor newVetor = new Vetor(this.matrix[line]);
-        newVetor.addValueToVetor(value);
-        this.matrix[line] = newVetor.getVetor();
+        matrix[line].addValueToVetor(value);
     }
     //d) Retire o primeiro elemento do array encapsulado com um determinado valor (percorrendo
     //primeiramente as linhas). A linha onde o elemento for retirado, ficará com menos uma coluna.
     public void removeElement (int value){
         for(int i=0; i<matrix.length; i++){
-            Vetor tempVetor = new Vetor(matrix[i]);
-            tempVetor.removeFirstOcurrenceOfValue(value);
-            if (tempVetor.vetorLength() != matrix[i].length){
-                matrix[i] = tempVetor.getVetor();
+            int length = matrix[i].vetorLength();
+            matrix[i].removeFirstOcurrenceOfValue(value);
+            if (matrix[i].vetorLength() != length){
                 break;
             }
         }
@@ -38,19 +35,17 @@ public class Matrix {
     }
     //f) Retorne o maior elemento do array.
     public int returnBiggestElement (){
-        int biggests = matrix[0][0];
+        int biggests = matrix[0].returnBiggestElementInVetor();
         for (int i=0; i<matrix.length; i++){
-            Vetor vetorTemp = new Vetor(matrix[i]);
-            biggests = Math.max(vetorTemp.returnBiggestElementInVetor(), biggests);
+            biggests = Math.max(matrix[i].returnBiggestElementInVetor(), biggests);
         }
         return biggests;
     }
     //g) Retorne o menor elemento do array.
     public int returnSmallestElement (){
-        int smallest = matrix[0][0];
+        int smallest = matrix[0].returnSmallestElementInVetor();
         for (int i=0; i<matrix.length; i++){
-            Vetor vetorTemp = new Vetor(matrix[i]);
-            smallest = Math.min(vetorTemp.returnSmallestElementInVetor(), smallest);
+            smallest = Math.min(matrix[i].returnSmallestElementInVetor(), smallest);
         }
         return smallest;
     }
@@ -58,45 +53,40 @@ public class Matrix {
     public double returnAverage (){
         double sum = 0;
         for (int i=0; i<matrix.length; i++){
-            Vetor vetorTemp = new Vetor(matrix[i]);
-            sum += vetorTemp.returnAverageOfElements();
+            sum += matrix[i].returnAverageOfElements();
         }
         return sum/matrix.length;
     }
     //i) Retorne um vetor em que cada posição corresponde à soma dos elementos da linha homóloga
     //do array encapsulado.
-    public int[] returnSumOfLines (){
-        int[] sumOfLines = new int[matrix.length];
+    public Vetor returnSumOfLines (){
+        Vetor sumOfLines = new Vetor ();
         for (int i=0; i<matrix.length; i++){
-            Vetor vetorTemp = new Vetor(matrix[i]);
-            double average = vetorTemp.returnAverageOfElements();
-
-            sumOfLines[i] = vetorTemp.vetorLength();
+            double average = matrix[i].returnAverageOfElements();
+            int sum = (int) average * matrix[i].vetorLength();
+            sumOfLines.addValueToVetor(sum);
         }
         return sumOfLines;
     }
     //j) Retorne um vetor em que cada posição corresponde à soma dos elementos da coluna homóloga
     //do array encapsulado.
-    public int[] returnSumOfColumns (){
-        int[] sumOfColumns = new int[matrix[0].length];
-        for (int i=0; i<matrix[0].length; i++){
-            int sum = 0;
-            for (int j=0; j<matrix.length; j++){
-                sum += matrix[j][i];
-            }
-            sumOfColumns[i] = sum;
+    public Vetor returnSumOfColumns (){
+        Vetor sumOfColumns = new Vetor();
+        for (int i=0; i<matrix[0].vetorLength(); i++){
+            Vetor temp = getColumnToArray(matrix, i);
+            int value = (int)temp.returnAverageOfElements()*temp.vetorLength();
+            sumOfColumns.addValueToVetor(value);
         }
         return sumOfColumns;
     }
     //k) Retorne o índice da linha do array com maior soma dos respetivos elementos. Deve ser usado o
     //método da alínea i).
     public int returnIndexLineWithBiggestSumOfElements (){
-        int[] sumOfLines = returnSumOfLines();
-        int biggestSum = sumOfLines[0];
+        Vetor sumOfLines = returnSumOfLines();
+        int highest = sumOfLines.returnBiggestElementInVetor();
         int index = 0;
-        for (int i=0; i<sumOfLines.length; i++){
-            if (sumOfLines[i] > biggestSum){
-                biggestSum = sumOfLines[i];
+        for (int i=0; i < sumOfLines.vetorLength(); i++){
+            if (sumOfLines.returnValueAtPosition(i) == highest){
                 index = i;
             }
         }
@@ -105,7 +95,7 @@ public class Matrix {
     //l) Retorne True se o array encapsulado corresponde a uma matriz quadrada.
     public boolean isMatrixSquare (){
         for(int i=0; i<matrix.length; i++){
-            if (matrix.length != matrix[i].length){
+            if (matrix.length != matrix[i].vetorLength()){
                 return false;
             }
         }
@@ -117,39 +107,21 @@ public class Matrix {
             return false;
         }
         for (int i=0; i<matrix.length; i++){
-            int[] column = getColumnToArray(matrix, i);
-            Vetor lineVector = new Vetor(matrix[i]);
-            if (!lineVector.trueIfVetorIsEqualToGivenVetor(column)){
+            Vetor column = getColumnToArray(matrix, i);
+            int[] array = matrix[i].getVetor();
+            if (!column.trueIfVetorIsEqualToGivenVetor(array)){
                 return false;
             }
+            
         }
         return true;
     }
     //n) Retorne a quantidade de elementos não nulos na diagonal principal da matriz (se quadrada) ou -
     //1 (se não for quadrada).
-    public int returnQuantityOfNonZeroElementsInMainDiagonal (){
-        if (!isMatrixSquare()){
-            return -1;
-        }
-        int counter = 0;
-        for (int i=0; i<matrix.length; i++){
-            if (matrix[i][i] != 0){
-                counter++;
-            }
-        }
-        return counter;
-    }
+
     //o) Retorne True caso a diagonal principal e a secundária sejam iguais, i.e. tenham os mesmos
     //elementos e pela mesma ordem.
-    public boolean trueIfMainAndSecondaryDiagonalAreEqual (){
-        if (!isMatrixSquare()){
-            return false;
-        }
-        int[] mainDiagonal = getMainDiagonalToArray(matrix);
-        int[] secondaryDiagonal = getSecondaryDiagonalToArray(matrix);
-        Vetor mainDiagonalVector = new Vetor(mainDiagonal);
-        return mainDiagonalVector.trueIfVetorIsEqualToGivenVetor(secondaryDiagonal);
-    }
+
 
     //p) Retorne um vetor com todos os elementos do array encapsulado cujo número de algarismos é
     //superior ao número médio de algarismos de todos os elementos do array.
@@ -162,10 +134,11 @@ public class Matrix {
     //u) Rode 180º os valores do array encapsulado.
     //v) Rode -90º os valores do array encapsulado.
 
-    public static int[] getColumnToArray (int[][] matrix, int column){
-        int[] array = new int[matrix.length];
-        for (int i=0; i < array.length; i++){
-            array[i] = matrix[i][column];
+    public static Vetor getColumnToArray (Vetor[] matrix, int column){
+        Vetor array = new Vetor();
+        for (int i=0; i < matrix.length; i++){
+            int value = matrix[i].returnValueAtPosition(column);
+            array.addValueToVetor(value);
         }
         return array;
     }
