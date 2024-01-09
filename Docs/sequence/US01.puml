@@ -1,0 +1,17 @@
+@startuml
+!pragma layout smetana
+!define DARKBLUE
+!include https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+autonumber
+participant controller as "Controller"
+participant ":House" as House
+participant "location:Location" as HouseLocation
+
+controller -> House: House(adress, zipCode)
+House -> HouseLocation: setLocation(adress, zipCode)
+HouseLocation -> HouseLocation: setAdress(adress)
+HouseLocation -> HouseLocation: setZipCode(zipCode)
+HouseLocation --> House: "location:HouseLocation"
+House -> House: setLocation(location)
+@enduml

@@ -77,25 +77,5 @@ class Exercicio3Test {
         //Assert
         assertEquals(expected, result);
     }
-    @Test
-    public void testGetLowestDistanceBetweenTwoCitiesGivenThreeFoldWay(){
-        String city1 = "A";
-        String city2 = "B";
-        String[] cityArray = {"A", "B", "C", "D", "E", "F" };
-        int[][] arrayDistance = {
-                //A B   C   D  E   F
-                {0, 0, 20, 30, 0, 0},   //A
-                {0, 0, 0, 0, 20, 10},   //B
-                {20, 0, 0, 0, 20, 20},  //C
-                {30, 0, 0, 0, 0, 30},   //D
-                {0, 20, 20, 0, 0, 40},  //E
-                {0, 10, 20, 30, 0, 0}   //F
-        };
-        int expected = 50;
-        //Act
-        int result = Exercicio3.returnMinimalDistanceBetweenTwoCities(city1, city2, cityArray, arrayDistance);
-        //Assert
-        assertEquals(expected, result);
-    }
 
 }

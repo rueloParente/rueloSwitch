@@ -1,110 +1,74 @@
 @startuml
 !pragma layout smetana
 
-class House {
--location: Location
--rooms: List<Room>
--users: List<User>
-}
 
-class Location {
--address: String
--zipCode: String
--gpsLocation: String
+class User{
+    -name: String
 
 }
-' Room is a class that represents a room/divistion of the house, we will be considering
-' that a room can be a bedroom, a kitchen but also a garden or a garage
-class Room {
--name: String
--floor: Integer
--dimension: RoomDimension
--devices: List<Device>
--owners: List<User>
+class Role{
+    -name: String
+    -description: String
+    }
 
-}
-
-class RoomDimension {
--length: double
--width: double
--height: double
-
-}
-
-' We can get the device type by a method checking
-' the type of the sensors and actuators
-class Device {
--name: String
--location: Room
--deviceType: DeviceType
--sensors: List<Sensor>
--actuators: List<Actuator>
-}
-
-class Sensor {
--name: String
--sensorType: SensorType
--state: boolean
-
-}
-
-class Actuator {
--name: String
--actuatorType: ActuatorType
--state: boolean
-
-}
+class House{
+    -address: String
+    -zipCode: String
+    -gpsLocation: String
 
 
+    }
+class Room{
+    -name: String
+    -floor: Integer
+    -length: double
+    -width: double
+    -height: double
+    -owners: List<User>
+    }
+class Device{
+    -name: String
+    -status: boolean
 
-class DeviceType {
--name: String
--description: String
+    }
+class Sensor{
+    -name: String
+    -description: String
+    -state: boolean
 
-}
+    }
+class Actuator{
+    -name: String
+    -state: boolean
+    }
+class DeviceType{
+    -name: String
+    -description: String
+    }
+class SensorType{
+    -name: String
+    -description: String
+    -units: String
+    -digital: boolean
+    }
+class ActuatorType{
+    -name: String
+    -description: String
+    -units: String
+    -digital: boolean
+    }
 
-class SensorType {
--name: String
--units: String
--mensOfDetection: String
--digital: boolean
--passive: boolean
+House "1 " *-- "1..* " Room : has
+User "1..* " o-- "1 " House : has
+User "1    " o-- "1..* " Role : has
+User "1 " o-- "1..* " Room : has
+Room "1 " o-- "1..* " Device
+Device "1 " o-- "1..* " Sensor
+Device "1 " o-- "0..* " Actuator
+Device "1 " o--- "1  " DeviceType
+Sensor "1 " o-- "1 " SensorType
+Actuator "1 " o-- "1 " ActuatorType
 
-}
 
-class ActuatorType {
--name: String
--motion: String
--power: String
-}
-
-class User {
--username: String
--roles: List<Role>
-}
-
-class Role {
--name: String
-}
-
-House "1" -- "1" Location : has
-Room "1" -- "1" RoomDimension : has
-House "1" -- "0..*" Room : contains
-Room "1"-- "0..*" Device : contains
-Device "1" --"1..*" Sensor : has a
-Device "1" --"0..*" Actuator : has a
-House "1" -- "1..*" User : has
-Room "1" -- "0..*" User : has
-User "1"-- "1..*" Role : has
-
-Sensor "1" -- "1" SensorType : has
-Actuator "1" -- "1" ActuatorType : has
-Device "1" -- "1" DeviceType : has
-
-class Supported {
-+type: List<SensorType>
-+type: List<ActuatorType>
-+type: List<DeviceType>
-}
 
 @enduml

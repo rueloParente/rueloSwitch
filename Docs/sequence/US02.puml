@@ -1,0 +1,21 @@
+@startuml
+!pragma layout smetana
+!define DARKBLUE
+!include https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+autonumber
+participant entity as "Entity"
+participant House as ":House"
+participant Room as "room:Room"
+participant Dimension as "dimension:Dimension"
+entity -> House: createRoom(name: String, floor: int, length: double, width: double, height: double)
+House -> Room: new Room(name: String, floor: int, length: double, width: double, height: double)
+Room -> Dimension: newDimension(length: double, width: double, height: double)
+Dimension -> Dimension: setLength(length: double)
+Dimension -> Dimension: setWidth(width: double)
+Dimension -> Dimension: setHeight(height: double)
+Dimension --> Room: dimension: Dimension
+Room -> Room: setDimentions(dimension: Dimension)
+Room --> House: room: Room
+House --> entity: room: Room
+@enduml

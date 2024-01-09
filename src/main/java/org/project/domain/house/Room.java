@@ -1,63 +1,34 @@
 package org.project.domain.house;
 
-import org.project.domain.device.Device;
+import org.project.domain.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
     private String name;
     private int floor;
-    private RoomDimensions roomDimensions;
-    private List<Device> devices;
+    private Dimensions dimensions;
+    //private List<Device> devices;
+    private List<User> owners;
 
-    public Room(String name, int floor, RoomDimensions roomDimensions) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Please enter a valid name for the room.");
-        }
-        if (roomDimensions == null) {
-            throw new IllegalArgumentException("Please enter valid dimensions for the room.");
-        }
+    Room (String name, int floor) throws IllegalArgumentException {
+        setName(name);
         this.floor = floor;
-        this.name = name;
-        this.roomDimensions = roomDimensions;
+        //this.devices = new ArrayList<>();
+       this.owners = new ArrayList<>();
     }
-
-    public void setName(String name) throws IllegalArgumentException {
+    void setName (String name) throws IllegalArgumentException {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Please enter a valid name for the room.");
         }
         this.name = name;
     }
-
-    public void setFloor(int floor) {
-        this.floor = floor;
+    public Dimensions setDimensions (double width, double length, double height) throws IllegalArgumentException {
+        this.dimensions = new Dimensions(width, length, height);
+        return this.dimensions;
     }
-    public void setDimensions(RoomDimensions roomDimensions) {
-        if (roomDimensions == null) {
-            throw new IllegalArgumentException("Please enter valid dimensions for the room.");
-        }
-        this.roomDimensions = roomDimensions;
-    }
-
-    public void addDevice(Device device) {
-        if (device == null) {
-            throw new IllegalArgumentException("Please enter a valid device.");
-        }
-        devices.add(device);
-    }
-    // Package-private method to facilitate unit testing
-    RoomDimensions checkDimensions() {
-        double length = roomDimensions.checkLength();
-        double width = roomDimensions.checkWidth();
-        double height = roomDimensions.checkHeight();
-        RoomDimensions roomDimensions = new RoomDimensions(width, length, height);
-
-        return roomDimensions;
-    }
-    int checkFloor() {
-        return floor;
-    }
-    String checkName() {
-        return name;
+    public String getName() {
+        return this.name;
     }
 }

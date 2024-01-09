@@ -6,26 +6,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class House {
-    private HouseLocation location;
+    private Location location;
+    private GPS gpsLocation;
     private List<User> usersList;
     private List<Room> roomsList;
 
-    public House(HouseLocation location) {
-        if (location == null) {
-            throw new IllegalArgumentException("Please enter a valid location for the house.");
-        }
-        this.location = location;
+    //Constructor chaining to create a house with a location
+    public House (String address, String zipCode){
+        this.location = new Location(address, zipCode);
         this.usersList = new ArrayList<>();
         this.roomsList = new ArrayList<>();
     }
-
-    public void addRoom(Room room) throws IllegalArgumentException {
-        if (this.roomsList.contains(room)) {
-            throw new IllegalArgumentException("Room already exists.");
-        }
-        else this.roomsList.add(room);
+    public Location getLocation() {
+        return this.location;
     }
     public List<Room> listRooms() {
         return List.copyOf(this.roomsList);
     }
+    public Room addRoom(String name, int floor){
+        Room newRoom = new Room(name, floor);
+        for (Room room : this.roomsList) {
+            if (room.getName().equals(newRoom.getName())) {
+                return null;
+            }
+        }
+        this.roomsList.add(newRoom);
+        return newRoom;
+    }
+
+
 }
